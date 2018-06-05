@@ -14,6 +14,11 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <display-name>Signin</display-name>
+        <servlet-name>Signin</servlet-name>
+        <servlet-class>Signin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -25,6 +30,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Signin</servlet-name>
+        <url-pattern>/Signin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

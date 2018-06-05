@@ -5,13 +5,16 @@
         <group>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/crypto.java</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/newhtml.html</file>
-            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/File2Hex.java</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/Files.java</file>
-            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/index.html</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/Login.java</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/Conexion.java</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/index_1.html</file>
+            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/client.jsp</file>
+            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/File2Hex.java</file>
+            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/LogoutServlet.java</file>
+            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/index.html</file>
+            <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/web/js/index.js</file>
             <file>file:/C:/Users/Master/Documents/NetBeansProjects/crypto/src/java/DownloadFileServlet.java</file>
         </group>
     </open-files>

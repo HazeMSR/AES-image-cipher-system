@@ -14,7 +14,7 @@ function deleteAllCookies() {
 }
 
 $(document).ready(function(e) {
-    deleteAllCookies();
+ 
 	$("#formAcc").validetta({
 		bubblePosition: 'bottom', bubbleGapTop: 10, bubbleGapLeft: -5,
 		onValid:function(e){
@@ -29,12 +29,10 @@ $(document).ready(function(e) {
 				success: function(response){				
 					if(response=="0" || response=="2" || response=="3"){
 						console.log(response);
-						alert("ERROR. El password o el usuario no coinciden.");
+						alert("ERROR. The password or the user is wrong. Please try again.");
 					}else{
-                                            alert("Bienvenido "+response);
-
-							$(location).attr("href","client.jsp");
-
+                                            alert("Welcome "+response);
+                                            $(location).attr("href","client.jsp");
 					}
 				}
 			});

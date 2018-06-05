@@ -15,7 +15,7 @@ public class DownloadFileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         // reads input file from an absolute path
-String filePath="C:/fi.txt";
+        String filePath="C:/fi.txt";
         File downloadFile = new File(filePath);
         FileInputStream inStream = new FileInputStream(downloadFile);
          
