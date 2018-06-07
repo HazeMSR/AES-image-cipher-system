@@ -88,8 +88,10 @@ public class crypto {
         }
  
     }
- 
-
+    public static void main(String[] args) throws SQLException, IOException {
+        
+       readBlob(1,"C:/wamp64/www/flores/img/Mundo.jpg");
+   }
 
 
 }

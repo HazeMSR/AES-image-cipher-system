@@ -88,9 +88,11 @@ public class Login extends HttpServlet {
                     HttpSession session = request.getSession();
                     text=rs.getString("user");
                     session.setAttribute("user",text);
+                    session.setAttribute("id",rs.getInt("id"));
                     session.setMaxInactiveInterval(30*60);
                     Cookie userName = new Cookie("user", user);
                     response.addCookie(userName);
+                    
                     //Get the encoded URL string
                 }
             } catch (SQLException e) {

@@ -1,23 +1,35 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Login Success Page</title>
-</head>
-<body>
-
-<br>
-<!-- need to encode all the URLs where we want session information to be passed -->
-
-</body>
-</html>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
 
 
 
 
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+    <%
+
+//allow access only if session exists
+String user = null;
+if(session.getAttribute("user") == null){
+  response.sendRedirect("index.html");
+}else user = (String) session.getAttribute("user");
+String userName = null;
+String sessionID = null;
+Cookie[] cookies = request.getCookies();
+if(cookies !=null){
+for(Cookie cookie : cookies){
+  if(cookie.getName().equals("user")) userName = cookie.getValue();
+  if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+}
+}else{
+  sessionID = session.getId();
+}
+%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,7 +38,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Artcripted</title>
+  <title>Login</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -62,24 +74,7 @@
 </head>
 <body> 
 
-<%
-//allow access only if session exists
-String user = null;
-if(session.getAttribute("user") == null){
-	response.sendRedirect("index.html");
-}else user = (String) session.getAttribute("user");
-String userName = null;
-String sessionID = null;
-Cookie[] cookies = request.getCookies();
-if(cookies !=null){
-for(Cookie cookie : cookies){
-	if(cookie.getName().equals("user")) userName = cookie.getValue();
-	if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
-}
-}else{
-	sessionID = session.getId();
-}
-%>
+
     <!--Modifica los datos del alumno con la instruccion update en el crud.js y update_AX-->
     <div id="modalSignIn" class="modal">
       <form id="signIn" >
@@ -126,9 +121,9 @@ for(Cookie cookie : cookies){
       	<div class="row">
             <div class="col s6 l6 input-field">
                 <form action="<%=response.encodeURL("LogoutServlet") %>" method="post">
-					<input type="submit" class="btn red" value="Logout" >
-				</form>
-              </div>
+					       <input type="submit" class="btn red" value="Logout" >
+				      </form>  
+            </div>
         </div>
         <br><br>
         <h2 class="header center teal-text text-lighten-2"><div style="color:#FFF; font-family: 'Times New Roman', Times, serif;">Hi <%=userName %>, Login successful. Your Session ID=<%=sessionID %></div></h2>
@@ -177,24 +172,76 @@ for(Cookie cookie : cookies){
   <div class="container">
     <div class="section">
       <!--   Icon Section   -->
-          <div class="icon-block">
+        <div class="icon-block">
+          <div class="row center">
+            <div class="col s12 m12 l12">
+              <h3 class="blue-text">Image upload</h3>
+              <br>
+            </div>
+          </div>
+            
+          <form id="uploadImg" action="UploadImage" method="post">
+            <div class="row">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Select the image</span>
+                  <input type="file" accept="image/*">
+                </div>
 
-            <div class="row center">
-                <div class="col s12 m12 l12">
-                    <h3><b?</b></h3>
-                    <br>
-                </div>
-            </div>
-            <div class="row center">
-                <div class="col s12 m8 l12">
-                    <h5> ? </h5>
-                    
-                    <h5>?</h5>
-                </div>
-            </div>
+              <input type="hidden" name="user" id="user" value="admin">
+              <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+              </div>
+                  </div>
+              </div>
+              <div class="row center">
+                  <input type="submit" class="btn purple" value="Submit" >
+              </div>
+          </form>
         </div>
+        <div class="row center">
+            <div class="col s12 m12 l12">
+              <h3 class="blue-text">Received images</h3>
+              <br>
+            </div>
+          </div>
+<%
+/*
+        String selectSQL = "SELECT * FROM user WHERE id=";
+        ResultSet rs = null;
+       
+ 
+        try (Connection conn=Conexion.getConexion();
+                PreparedStatement pstmt = conn.prepareStatement(selectSQL);) {
+                  pstmt.setInt(1, candidateId);
+ 
+            System.out.println("Writing to file ");
+             rs = pstmt.executeQuery();
+            while (rs.next()) {
+*/
+
+%>
+  <img class="responsive-img" src="img/file.png" style="max-width: 15%">
+<%
+/*
+            }
+        } catch (SQLException) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+*/
+%>
+
     </div>
   </div>
+
 
 
 
@@ -202,51 +249,131 @@ for(Cookie cookie : cookies){
     <div class="section no-pad-bot">
       <div class="container">
         <div class="row center">
-          <div class="azul-p col s12 l12" ><h3><b>?</b></h3></div>
-          <BR>
+            <div class="col s12 m12 l12">
+                <h2 class="black-text">Decrypt an image</h2>
+                <br>
+            </div>
         </div>
         <div class="row center">
-          <div class="azul-p col s12 l12" ><h5>? </h5></div>
+            <div class="col s12 m12 l12">
+                <h3 class="blue-text">Steps:</h3>
+            </div>
         </div>
-      </div>
+        <div class="row center">
+            <div class="col s12 m12 l12">
+                <h4 class="blue-text">1) Download the files</h4>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col s12 m6 l6">
+                <form action="<%=response.encodeURL("DownloadEncImg") %>" method="post">
+                        <input type="submit" class="btn black" value="Download Encrypted Image" >
+                </form>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col s12 m6 l6">
+                <form action="<%=response.encodeURL("DownloadEncKey") %>" method="post">
+                    <input type="hidden" name="enc_key" id="enc_key" value="">
+			                <input type="submit" class="btn black" value="Download Encrypted Key" >
+                </form>
+            </div>
+        </div>
+                
+            <!--
+            <div class="row center">
+                <div class="col s12 m12 l12">
+                    <h4 class="white-text">2) Write the user name who wants to be reference</h4>
+                </div>
+            </div>
+            <div class="row center">
+                <div class="col s12 m6 l6">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+     
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input name="user" id="icon_prefix" type="hidden" class="validate" data-validetta="required,maxLength[255]">
+                            <label for="icon_prefix">First Name</label>
+                        </div>>
+                        
+                    </div>
+                </div>
+            </div>
+            -->
+        <div class="row center">
+            <div class="col s12 m12 l12">
+                <h4 class="blue-text">2) Upload the files</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Select the encrypted image</span>
+                    <input type="file" name="enc_img" >
+                    
+                </div>
+                <input type="hidden" name="user" id="user" value="admin">
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </div>
+                                
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Select the encrypted key</span>
+                <input type="file" name="enc_key" >
+                
+            </div>
+            
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="row center">
+          <div class="col s12 m12 l12">
+              <h4 class="blue-text">3) Download the decrypted img</h4>
+          </div>
+        </div>
+        <div class="row center">
+          <div class="col s12 m6 l6">
+            <form action="<%=response.encodeURL("DownloadEncImg") %>" method="post">
+	          <input type="submit" class="btn black" value="Download Decrypted Image" >
+          </div>
+        </div>              
+      </div>        
     </div>
-    <div class="parallax"><img src="img/w3.jpg" alt="Unsplashed background img 2"></div>
+    <div class="parallax"><img src="img/wu2.jpeg" alt="Unsplashed background img 2"></div>
   </div>
 
 
 
   <div class="container">
     <div class="section">
-      <!--   Icon Section   -->
-          <div class="icon-block">
-            <div class="row">
-                <div class="col s12 m12 l12">
-                <h1 class="center blue-text"><i class="material-icons">group</i></h1>
-                </div>
-            </div>
             <div class="row center">
                 <div class="col s12 m12 l12">
-                     <h5>Developed by:</h5>
+                    <h3 class="green-text"> Confirm the price to pay with digital certificate</h3>
                 </div>
             </div>
-            <div class="row center">
+            <form>
+              <div class="row center">
+                <div class="col s12 m12 l12 input-fields">
+                  <i class="material-icons prefix">account_circle</i>
+  
+                  <input name="message" id="icon_prefix" type="text" class="validate" data-validetta="required,maxLength[255]">
+                  <label for="icon_prefix">Enter the message:</label>
+                </div>
+              </div>
+              <div class="row center">
                 <div class="col s12 m12 l12">
-              ANDRADE GUZMAN JAVIER ALEJANDRO
+                  <input type="submit" class="btn blue" value="Submit">
                 </div>
-            </div>
-            <div class="row center">
-                <div class="col s12 m12 l12">
-              CID VAZQUEZ EDDER ROBERTO
-                </div>
-            </div>
-            <div class="row center">
-                <div class="col s12 m12 l12">
-              MARTINEZ SAN ROMAN AARON HAZEL
-                </div>
-            </div>
-          </div>
-        </div>
+              </div>
+            </form>
     </div>
+  </div>
+
   <div class="parallax-container valign-wrapper" id="banner">
     <div class="section no-pad-bot">
       <div class="container">
@@ -257,10 +384,18 @@ for(Cookie cookie : cookies){
         <div class="row center">
           <div class="azul-p col s12 l12" ><h5>ESCOM - IPN</h5></div>
         </div>
+        <div class="row">
+            <div class="col s6 l6 input-field">
+                <form action="<%=response.encodeURL("LogoutServlet") %>" method="post">
+                 <input type="submit" class="btn red" value="Logout" >
+              </form>  
+            </div>
+        </div>
       </div>
     </div>
     <div class="parallax"><img src="img/w2.jpg" alt="Unsplashed background img 2"></div>
   </div>
+
   </body>
 
 
