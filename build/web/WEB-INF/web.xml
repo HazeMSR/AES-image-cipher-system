@@ -3,25 +3,25 @@
     <servlet>
         <display-name>Login</display-name>
         <servlet-name>Login</servlet-name>
-        <servlet-class>Login</servlet-class>
+        <servlet-class>.Login</servlet-class>
     </servlet>
     <servlet>
         <display-name>DownloadFileServlet</display-name>
         <servlet-name>DownloadFileServlet</servlet-name>
-        <servlet-class>DownloadFileServlet</servlet-class>
+        <servlet-class>.DownloadFileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>LogoutServlet</servlet-class>
+        <servlet-class>.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <display-name>Signin</display-name>
         <servlet-name>Signin</servlet-name>
-        <servlet-class>Signin</servlet-class>
+        <servlet-class>.Signin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UploadImage</servlet-name>
-        <servlet-class>UploadImage</servlet-class>
+        <servlet-class>.UploadImage</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
