@@ -135,6 +135,42 @@ public class crypto {
         }
         
     }
+ public static int writeBlob4(int user_id, String img_name,File image, File key, int receiver) throws SQLException {
+        // update sql
+       
+         Connection conn=Conexion.getConexion();
+        String updateSQL = "INSERT purposal (user_id,img_name,image,key2,receiver)"
+                        + " VALUES(?,?,?,?,?)";
+        int ret = 0;
+            
+
+        try ( 
+                PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+ 
+            // read the file
+            FileInputStream inputImage = new FileInputStream(image);
+            FileInputStream inputKey = new FileInputStream(key);
+
+            // set parameters
+            pstmt.setInt(1, user_id);
+            pstmt.setString(2, img_name);
+            pstmt.setBinaryStream(3, inputImage);
+            pstmt.setBinaryStream(4, inputKey);
+            pstmt.setInt(5, receiver);
+ 
+            // store the resume file in database
+            System.out.println("Reading file " + image.getAbsolutePath());
+            System.out.println("Store file in the database.");
+            pstmt.executeUpdate();
+            ret = 1;
+ 
+        } catch (SQLException | FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            ret=2;
+            System.out.println("crypto: "+ret);
+        }
+        return ret;
+    }
     public static int writeBlob3(String user,String pass,File pubk, File privk) throws SQLException {
         // update sql
         Connection conn=Conexion.getConexion();

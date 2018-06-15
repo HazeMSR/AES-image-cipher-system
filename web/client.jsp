@@ -383,7 +383,7 @@ for(Cookie cookie : cookies){
 
         <div class="row center">
             <div class="col s12 m12 l12">
-                <h2 class="black-text">Decrypt Purposals</h2>
+                <h2 class="black-text">Download Purposals</h2>
                 <br>
             </div>
         </div>
@@ -404,7 +404,7 @@ for(Cookie cookie : cookies){
           count++;
 
 %>
-  <form action='<%=response.encodeURL("DownloadFileServlet") %>' method='post'>
+  <form action='<%=response.encodeURL("DownloadSPurposal") %>' method='post'>
     <div class="row center">
       <div class="col s12 m12 l12">
         <img class="responsive-img" src="img/certificate.png" style="max-width: 15%">
@@ -414,7 +414,6 @@ for(Cookie cookie : cookies){
       <div class="col s12 m12 l12">
         <input type="hidden" name="id" value="<%=rs.getString("id")%>">
         <input type="hidden" name="name" value="<%=rs.getString("img_name")%>">
-        <input type="hidden" name="dl" class="dl" >
         <h4><%=rs.getString("img_name")%></h4>
       </div>
     </div>

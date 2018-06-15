@@ -69,8 +69,7 @@ for(Cookie cookie : cookies){
       $(document).ready(function() {
         
        
-                   $('#textarea1').val(' ');
-          M.textareaAutoResize($('#textarea1'));
+
         
 
         $(".Download_Image").on("click",function(){
@@ -79,8 +78,10 @@ for(Cookie cookie : cookies){
         $(".Download_Key").on("click",function(){
           $('.dl').val('1');
 
-        });
 
+        });
+                   $('#textarea1').val(' ');
+          M.textareaAutoResize($('#textarea1'));
       });
   </script>
 </head>
@@ -366,6 +367,7 @@ for(Cookie cookie : cookies){
             </div>
 
             <form action="EncryptPurposal" method="POST">
+              <input type="hidden" name="u2" id="u2" value="<%=id%>">
               <div class="row center">
                 <div class="input-field col s12 l12">
                   <i class="material-icons prefix">account_circle</i>
@@ -377,7 +379,7 @@ for(Cookie cookie : cookies){
               <div class="row center">
                 <div class="col s12 m12 l12">
                   <label for="textarea1">Enter the username:</label>
-                  <input type="text" id="receiver" name="receiver" class="black-text" required data-validetta="required">
+                  <input type="text" id="receiver" name="r2" class="black-text" required data-validetta="required">
                 </div>
               </div>
               <div class="row center">
@@ -419,7 +421,7 @@ for(Cookie cookie : cookies){
           count++;
 
 %>
-  <form action='<%=response.encodeURL("DownloadFileServlet") %>' method='post'>
+  <form action='<%=response.encodeURL("DownloadSPurposal") %>' method='post'>
     <div class="row center">
       <div class="col s12 m12 l12">
         <img class="responsive-img" src="img/certificate.png" style="max-width: 15%">
@@ -429,8 +431,6 @@ for(Cookie cookie : cookies){
       <div class="col s12 m12 l12">
         <input type="hidden" name="id" value="<%=rs.getString("id")%>">
         <input type="hidden" name="name" value="<%=rs.getString("img_name")%>">
-        <input type="hidden" name="dl" class="dl" >
-        <h4><%=rs.getString("img_name")%></h4>
       </div>
     </div>
     <div class="row center">

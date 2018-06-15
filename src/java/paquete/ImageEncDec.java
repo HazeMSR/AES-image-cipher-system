@@ -135,10 +135,17 @@ public class ImageEncDec {
         byte[] decrypted = null;
         SecretKey key;
         Path dir;
+        System.out.println("File bytes: "+textCryp);
+        int llaveSize=24;
         try {
             dir = Paths.get(llave.getPath());
             //System.out.println(dir);
-            key = new SecretKeySpec(Files.readAllBytes(dir), 0, Files.readAllBytes(dir).length, "AES");
+            System.out.println("LLave bytes: "+Files.readAllBytes(dir));
+            System.out.println("Llave length: "+Files.readAllBytes(dir).length);
+            llaveSize = Files.readAllBytes(dir).length;
+            if(llaveSize>32 || (llaveSize%8)!=0)
+                llaveSize=24;
+            key = new SecretKeySpec(Files.readAllBytes(dir), 0,llaveSize , "AES");
             cipher = Cipher.getInstance("AES/CTR/NoPadding");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(new byte[16]));
             decrypted = cipher.doFinal(textCryp);

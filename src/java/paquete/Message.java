@@ -8,12 +8,16 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Signature;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -37,12 +41,41 @@ public class Message {
     }
 
     //Method to retrieve the Private Key from a file
-    public PrivateKey getPrivate(String filename) throws Exception {
-        byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(keyBytes));
+    public PrivateKey getPrivate(String filename)  {
+        KeyFactory kf=null;
+        byte[] keyBytes = null;
+        PKCS8EncodedKeySpec spec = null;
+        try{
+            
+        keyBytes = Files.readAllBytes(new File(filename).toPath());
+            
+            System.out.println("keyBytes: "+keyBytes);
+            System.out.println("keyBytes Length: "+keyBytes.length);
+            System.out.println("fileName: "+filename);
+            
+         spec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(keyBytes));
         //X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.getDecoder().decode(keyBytes));
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(spec);
+        kf = KeyFactory.getInstance("RSA");
+        }
+        catch(IOException e){
+            System.out.println("keyBytes: "+keyBytes);
+            System.out.println("fileName: "+filename);
+            System.out.println("Error : "+e);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Message.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error No such Algorithm: "+ex);
+            System.out.println("keyBytes: "+keyBytes);
+            System.out.println("fileName: "+filename);
+        }
+        try {
+            return kf.generatePrivate(spec);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(Message.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error Invalid Key: "+ex);
+            System.out.println("keyBytes: "+keyBytes);
+            System.out.println("fileName: "+filename);
+        }
+        return null;
     }
 
     //Method to write the List of byte[] to a file

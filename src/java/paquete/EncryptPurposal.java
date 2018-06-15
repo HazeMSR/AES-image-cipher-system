@@ -5,12 +5,14 @@
  */
 package paquete;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -66,17 +68,26 @@ public class EncryptPurposal extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         String mensaje = request.getParameter("texto");
+        String u2 =request.getParameter("u2");
+        String text = "0";
+        System.out.println("user_id: "+u2);
+        int user_id = Integer.valueOf(u2);
         String receiver = request.getParameter("r2");
         System.out.println("Texto: "+mensaje);
+        
         System.out.println("receiver: "+receiver);
         try {
-        /*
+       
         String selectSQL = "SELECT * FROM user WHERE user=?";
+        String rutaLlavePub="";
+        String rutaLlavePriv="";
         ResultSet rs = null, rs2 = null;
-        String text = "0";
+        
         Connection conn = Conexion.getConexion();
         int id = -1;
-
+    Random randomGenerator = new Random();
+   
+      int randomInt = randomGenerator.nextInt(10000);
         try (
                 PreparedStatement pstmt = conn.prepareStatement(selectSQL);) {
             // set parameter;
@@ -96,8 +107,12 @@ public class EncryptPurposal extends HttpServlet {
             try {
                 if (rs != null) {
                     rs.close();
-                    String rutaLlave="C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/tempprivk"+id+receiver+".txt";
-                    String res = crypto.readBlob2(id,rutaLlave,"C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/tempprivk"+id+receiver+".txt");
+                    rutaLlavePub="C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/temppubk"+id+receiver+".txt";
+                    rutaLlavePriv="C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/tempprivk"+id+receiver+".txt";
+                    
+                    System.out.println("Ruta Llave Pub: "+rutaLlavePub);
+                    System.out.println("Ruta Llave Priv: "+rutaLlavePriv);
+                    String res = crypto.readBlob2(id,rutaLlavePub,rutaLlavePriv);
 
                 } else {
                     System.out.println("No se encontro algun usuario relacionado en la base");
@@ -109,11 +124,35 @@ public class EncryptPurposal extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }*/
-            new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userprivk1985.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMessartistuser.txt");
+        }
+            new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userprivk1985.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess"+id+receiver+randomInt+".txt");
+            //new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/tempprivk0artist.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess.txt");
+            File llaveAES = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt");
+            File enc_img = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess"+id+receiver+randomInt+".txt");
+            int ret = crypto.writeBlob4(user_id, "tempMess"+id+receiver+randomInt+".txt", enc_img, llaveAES, id);
+
+                    
+                    if (ret == 0) {
+                        text="The purposal could not be saved, with another.";
+                        System.out.println("No grabo en la BD");
+                    } else if (ret == 1) {
+                        text="The purposal was successfully saved.";
+                        System.out.println("Grabo en la BD");
+                    } else {
+                        text="The purposal could not be saved, with another.";
+                        System.out.println("Hubo un error al grabar en la BD");
+                    }
         } catch (Exception ex) {
             Logger.getLogger(EncryptPurposal.class.getName()).log(Level.SEVERE, null, ex);
         }
+                response.setContentType("text/html;charset=UTF-8");
+        
+        response.getWriter().write("<script>"+
+                "alert('"+text+"');"+
+                "location='client.jsp';"+
+                "</script>");
+        //response.sendRedirect(page);
+        
     }
 
     /**

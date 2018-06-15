@@ -36,6 +36,10 @@
         <servlet-name>EncryptPurposal</servlet-name>
         <servlet-class>paquete.EncryptPurposal</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DownloadSPurposal</servlet-name>
+        <servlet-class>paquete.DownloadSPurposal</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>EncryptPurposal</servlet-name>
         <url-pattern>/EncryptPurposal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadSPurposal</servlet-name>
+        <url-pattern>/DownloadSPurposal</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

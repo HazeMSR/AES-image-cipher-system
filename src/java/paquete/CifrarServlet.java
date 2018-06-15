@@ -108,6 +108,7 @@ public class CifrarServlet extends HttpServlet {
                     File key = crypto.InputStreamToFile(fileContent2, "Dec"+String.valueOf(num_rows)+key_name);
 
                     byte[] hola =ImageEncDec.getFile(image);
+                    System.out.println("key: "+key);
                     ImageEncDec.saveFile(ImageEncDec.decryptPdfFile(key, hola ) , "C:/Users/Master/Documents/NetBeansProjects/crypto2/Dec/",num_rows+img_name) ;
                     File downloadFile = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Dec/"+num_rows+img_name);
 
