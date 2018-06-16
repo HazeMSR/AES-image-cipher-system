@@ -5,13 +5,15 @@
  */
 package paquete;
 
+
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,22 @@ public class EncryptPurposal extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public static String filenameFormat(String zero){
+        String ret="";
+        int i=0,n=zero.length();
+        char c=' ';
+        
+        for(;i<n;i++){
+            c=zero.charAt(i);
+            //WithoutSpaces
+            if(!Character.isWhitespace(c) || c==':')
+                c='_';
+                
+            ret+=c;
+        }
+            
+        return ret;
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -126,21 +144,29 @@ public class EncryptPurposal extends HttpServlet {
                 Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userprivk1985.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess"+id+receiver+randomInt+".txt");
+            String d= filenameFormat(new Date().toString());
+            int num_rows = Conexion.num("purposal");
+            String filename=u2+"Mess"+num_rows+"0"+d+".txt";
+            System.out.println("Filename: "+filename);
+            
+            new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userprivk1985.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+filename);
             //new Message(mensaje, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/tempprivk0artist.txt").writeToFile("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess.txt");
             File llaveAES = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt");
-            File enc_img = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/tempMess"+id+receiver+randomInt+".txt");
-            int ret = crypto.writeBlob4(user_id, "tempMess"+id+receiver+randomInt+".txt", enc_img, llaveAES, id);
+            
 
-                    
+            File enc_img = new File("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+filename);
+            
+            int ret = crypto.writeBlob4(user_id, filename, enc_img, llaveAES, id);
+
+
                     if (ret == 0) {
-                        text="The purposal could not be saved, with another.";
+                        text="The purposal could not be saved,try with another.";
                         System.out.println("No grabo en la BD");
                     } else if (ret == 1) {
                         text="The purposal was successfully saved.";
                         System.out.println("Grabo en la BD");
                     } else {
-                        text="The purposal could not be saved, with another.";
+                        text="The purposal could not be saved,try with another.";
                         System.out.println("Hubo un error al grabar en la BD");
                     }
         } catch (Exception ex) {
