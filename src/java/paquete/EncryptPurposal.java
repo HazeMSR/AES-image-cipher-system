@@ -70,12 +70,13 @@ public class EncryptPurposal extends HttpServlet {
         String mensaje = request.getParameter("texto");
         String u2 =request.getParameter("u2");
         String text = "0";
-        System.out.println("user_id: "+u2);
-        int user_id = Integer.valueOf(u2);
         String receiver = request.getParameter("r2");
-        System.out.println("Texto: "+mensaje);
         
         System.out.println("receiver: "+receiver);
+        System.out.println("Texto: "+mensaje);
+        System.out.println("user_id: "+u2);
+        int user_id = Integer.valueOf(u2);
+
         try {
        
         String selectSQL = "SELECT * FROM user WHERE user=?";

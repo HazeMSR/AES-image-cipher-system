@@ -68,15 +68,27 @@ public class DownloadSPurposal extends HttpServlet {
 
         // reads input file from an absolute path
         String filePath=request.getParameter("name");
-        /*try {
-            new VerifyMessage("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/Dec"+filePath, "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt");
+        System.out.println("NAME: "+filePath);
+
+            String v1="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+filePath;
+            String v2="C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt";
+            String v3="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/Dec"+filePath;
+            System.out.println("v1: "+v1);
+            System.out.println("v2: "+v2);
+            System.out.println("v3: "+v3); 
+            
+            try {
+
+            //        new VerifyMessage("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/prueba.txt", "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt","C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/Dec2prueba.txt");
+
+            new VerifyMessage(v1,v2,v3);
+            
+
         } catch (Exception ex) {
             Logger.getLogger(DownloadSPurposal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String n ="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/Dec"+filePath;*/
-        String n ="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+filePath;
-        System.out.println("Rute: "+n);
-        File downloadFile = new File(n);
+
+        File downloadFile = new File(v3);
         FileInputStream inStream = new FileInputStream(downloadFile);
          
         // if you want to use a relative path to context root:

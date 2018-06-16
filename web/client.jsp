@@ -356,6 +356,7 @@ for(Cookie cookie : cookies){
             </div>    
 
             <form action="EncryptPurposal" method="POST">
+              <input type="hidden" name="u2" value="<%=id%>">
               <input type="hidden" name="r2" value="artist">
               <div class="row center">
                 <div class="input-field col s12 l12">
@@ -419,7 +420,7 @@ for(Cookie cookie : cookies){
     </div>
     <div class="row center">
       <div class="col s12 m12 l12">
-        <input type="submit" class="btn blue Download_Image" value="Download Purposal" style="width:75%;">
+        <input type="submit" class="btn blue" value="Download Purposal" style="width:75%;">
       </div>
     </div>
   </form>

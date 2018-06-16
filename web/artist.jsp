@@ -431,11 +431,12 @@ for(Cookie cookie : cookies){
       <div class="col s12 m12 l12">
         <input type="hidden" name="id" value="<%=rs.getString("id")%>">
         <input type="hidden" name="name" value="<%=rs.getString("img_name")%>">
+        <h4><%=rs.getString("img_name")%></h4>
       </div>
     </div>
     <div class="row center">
       <div class="col s12 m12 l12">
-        <input type="submit" class="btn blue Download_Image" value="Download Purposal" style="width:75%;">
+        <input type="submit" class="btn blue" value="Download Purposal" style="width:75%;">
       </div>
     </div>
   </form>
