@@ -18,7 +18,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Login</title>
     <%
-
 //allow access only if session exists
 String user = null;
 if(session.getAttribute("user") == null){
@@ -28,7 +27,11 @@ if(session.getAttribute("user") == null){
 <%
   System.out.println("Por que?");
 
-}else {user = (String) session.getAttribute("user");}
+}else {
+  user = (String) session.getAttribute("user"); 
+  if(user.equals("artist"))
+    response.sendRedirect("artist.html");
+}
 System.out.println("user: "+session.getAttribute("user"));
 String id = String.valueOf(session.getAttribute("id"));
 String userName = null;
@@ -358,6 +361,7 @@ for(Cookie cookie : cookies){
             <form action="EncryptPurposal" method="POST">
               <input type="hidden" name="u2" value="<%=id%>">
               <input type="hidden" name="r2" value="artist">
+              <input type="hidden" name="page" value="client.jsp">
               <div class="row center">
                 <div class="input-field col s12 l12">
                   <i class="material-icons prefix">account_circle</i>

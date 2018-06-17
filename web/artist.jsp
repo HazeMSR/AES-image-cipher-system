@@ -28,7 +28,14 @@ if(session.getAttribute("user") == null){
 <%
   System.out.println("Por que?");
 
-}else {user = (String) session.getAttribute("user");}
+}else {
+    user = (String) session.getAttribute("user");
+    if(!user.equals("artist")){
+    response.sendRedirect("client.html");
+System.out.println("Entro logout");
+}
+        
+}
 System.out.println("user: "+session.getAttribute("user"));
 String id = String.valueOf(session.getAttribute("id"));
 String userName = null;
@@ -134,7 +141,7 @@ for(Cookie cookie : cookies){
         <div class="row">
             <div class="col s6 l6 input-field">
                 <form action="<%=response.encodeURL("Logout") %>" method="post">
-                  <input type="hidden" name="pagina" value="client.jsp">
+                  <input type="hidden" name="pagina" value="artist.jsp">
                  <input type="submit" class="btn red" value="Logout" >
               </form>  
             </div>
@@ -367,6 +374,7 @@ for(Cookie cookie : cookies){
             </div>
 
             <form action="EncryptPurposal" method="POST">
+              <input type="hidden" name="page" value="artist.jsp">
               <input type="hidden" name="u2" id="u2" value="<%=id%>">
               <div class="row center">
                 <div class="input-field col s12 l12">
