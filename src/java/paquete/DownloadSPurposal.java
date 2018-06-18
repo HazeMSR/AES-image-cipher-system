@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package paquete;
 
 import java.io.File;
@@ -68,6 +64,8 @@ public class DownloadSPurposal extends HttpServlet {
 
         // reads input file from an absolute path
         String filePath=request.getParameter("name");
+        String dp=request.getParameter("dp");
+        int id = Integer.valueOf(request.getParameter("id"));
         System.out.println("NAME: "+filePath);
 
             String v1="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+filePath;
@@ -80,15 +78,18 @@ public class DownloadSPurposal extends HttpServlet {
             try {
 
             //        new VerifyMessage("C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/prueba.txt", "C:/Users/Master/Documents/NetBeansProjects/crypto2/Llaves/userpubk1985.txt","C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/Dec2prueba.txt");
-
-            new VerifyMessage(v1,v2,v3);
+            if(dp.equals("1"))
+                new VerifyMessage(v1,v2,v3);
             
 
         } catch (Exception ex) {
             Logger.getLogger(DownloadSPurposal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        File downloadFile = new File(v3);
+            File downloadFile=null;
+        if(dp.equals("1"))
+            downloadFile = new File(v3);
+        else
+            downloadFile = new File(v1);
         FileInputStream inStream = new FileInputStream(downloadFile);
          
         // if you want to use a relative path to context root:

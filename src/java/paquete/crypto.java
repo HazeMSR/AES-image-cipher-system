@@ -205,6 +205,7 @@ public class crypto {
         }
         return ret;
     }
+
    public static String readBlob(int candidateId,String name,int action) throws IOException {
         // update sql
         
@@ -239,6 +240,62 @@ public class crypto {
                     input = rs.getBinaryStream("image");
                 else
                     input = rs.getBinaryStream("key2");
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+                cont++;
+                output.close();
+                input.close();
+            }
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return ret;
+ 
+    }
+    
+   public static String readBlob3(int candidateId,String name) throws IOException {
+        // update sql
+        
+
+            String selectSQL = "SELECT * FROM purposal WHERE id=?";
+        ResultSet rs = null;
+        FileOutputStream output = null;
+        InputStream input = null;
+        File file = null;
+        String ret = "";
+
+        try (Connection conn=Conexion.getConexion();
+                PreparedStatement pstmt = conn.prepareStatement(selectSQL);) {
+            // set parameter;
+            pstmt.setInt(1, candidateId);
+            rs = pstmt.executeQuery();
+ 
+            // write binary stream into file
+            int cont = 0;
+ 
+            //System.out.println("action: "+action);
+            while (rs.next()) {
+                if(cont==0){
+                   
+                        ret="C:/Users/Master/Documents/NetBeansProjects/crypto2/Mensaje/"+name;
+
+                    file = new File(ret);
+                    output = new FileOutputStream(file);
+                }
+                //if(action==0)
+                    input = rs.getBinaryStream("image");
+                /*else
+                    input = rs.getBinaryStream("key2");*/
                 byte[] buffer = new byte[1024];
                 while (input.read(buffer) > 0) {
                     output.write(buffer);
@@ -322,10 +379,11 @@ public class crypto {
         return ret;
  
     }
+   /*
     public static void main(String[] args) throws SQLException, IOException {
         
        //String newf= readBlob(1);
-   }
+   }*/
 
 
 }

@@ -31,7 +31,7 @@ if(session.getAttribute("user") == null){
 }else {
     user = (String) session.getAttribute("user");
     if(!user.equals("artist")){
-    response.sendRedirect("client.html");
+    response.sendRedirect("client.jsp");
 System.out.println("Entro logout");
 }
         
@@ -74,19 +74,23 @@ for(Cookie cookie : cookies){
 
         
       $(document).ready(function() {
-        
-       
-
-        
 
         $(".Download_Image").on("click",function(){
           $('.dl').val('0');
         });
         $(".Download_Key").on("click",function(){
           $('.dl').val('1');
-
-
         });
+
+        $(".DownloadEncP").on("click",function(){
+          $('.dp').val('0');
+          console.log($('.dp').val());
+        });
+        $(".DownloadP").on("click",function(){
+          $('.dp').val('1');
+          console.log($('.dp').val());
+        });
+
                    $('#textarea1').val(' ');
           M.textareaAutoResize($('#textarea1'));
       });
@@ -438,13 +442,17 @@ for(Cookie cookie : cookies){
     <div class="row center">
       <div class="col s12 m12 l12">
         <input type="hidden" name="id" value="<%=rs.getString("id")%>">
+        <input type="hidden" name="dp" class="dp">
         <input type="hidden" name="name" value="<%=rs.getString("img_name")%>">
         <h4><%=rs.getString("img_name")%></h4>
       </div>
     </div>
     <div class="row center">
-      <div class="col s12 m12 l12">
-        <input type="submit" class="btn blue" value="Download Purposal" style="width:75%;">
+      <div class="col s12 m12 l6">
+        <input type="submit" class="btn purple DownloadEncP" value="Download Encrypted Purposal" style="width:75%;">
+      </div>
+      <div class="col s12 m12 l6">
+        <input type="submit" class="btn yellow black-text DownloadP" value="Download Decrypted Purposal" style="width:75%;">
       </div>
     </div>
   </form>
